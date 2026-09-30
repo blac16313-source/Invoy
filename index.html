@@ -3,131 +3,103 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>INVOY - Send. Get Paid.</title>
+<title>INVOY</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>body{font-family:'Inter',sans-serif}</style>
 </head>
-<body class="bg-[#fafafa] text-zinc-900">
-<div class="max-w-[1400px] mx-auto grid-cols-1 lg:grid-cols-[420px_1fr] min-h-screen">
+<body class="bg-[#0a0a0a] text-white">
+<div class="max-w-[1400px] mx-auto lg:grid lg:grid-cols-[480px_1fr] min-h-screen">
 
-  <!-- LEFT FORM -->
-  <div class="bg-white border-r p-8 space-y-6 overflow-y-auto">
-    <div>
-      <h1 class="text-3xl font-bold tracking-tighter">INVOY</h1>
-      <p class="text-sm text-zinc-500">Send. Get Paid.</p>
+  <!-- FORM - PREMIUM DARK -->
+  <div class="p-8 space-y-8 bg-[#111] border-r border-zinc-800">
+    <div class="flex justify-between items-center">
+      <div><h1 class="text-2xl font-extrabold tracking-tighter">INVOY</h1><p class="text-xs text-zinc-500 mt-1">FOR FREELANCERS WHO GET PAID</p></div>
+      <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
     </div>
 
-    <div class="space-y-4">
-      <label class="block text-xs font-semibold">YOUR DETAILS</label>
-      <input id="yourName" placeholder="Your Name / Studio" class="w-full border p-3 rounded-lg text-sm" value="Your Studio">
-      <input id="yourUpi" placeholder="Your UPI ID (for QR)" class="w-full border p-3 rounded-lg text-sm" value="yourname@upi">
-
-      <label class="block text-xs font-semibold pt-4">CLIENT DETAILS</label>
-      <input id="clientName" placeholder="Client Name" class="w-full border p-3 rounded-lg text-sm" value="Acme Inc">
-      <input id="projectName" placeholder="Project Title" class="w-full border p-3 rounded-lg text-sm" value="Website Design">
-
-      <label class="block text-xs font-semibold pt-4">INVOICE DETAILS</label>
-      <div class="grid grid-cols-2 gap-2">
-        <input id="invNo" class="border p-3 rounded-lg text-sm" value="INV-001">
-        <input id="invDate" type="date" class="border p-3 rounded-lg text-sm">
+    <div class="space-y-6">
+      <div><p class="text-[11px] font-bold tracking-widest text-zinc-500 mb-3">01 / YOUR STUDIO</p>
+        <input id="yourName" placeholder="Your Name — e.g. Jatin Studio" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm focus:border-white outline-none" />
+        <input id="yourUpi" placeholder="Your REAL UPI ID — e.g. jatin@okhdfc" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm mt-3 focus:border-white outline-none" />
+        <p class="text-[10px] text-zinc-500 mt-2">QR will appear only when you enter correct UPI ID</p>
       </div>
 
-      <label class="block text-xs font-semibold pt-4">ITEMS</label>
-      <input id="itemDesc" placeholder="Description" class="w-full border p-3 rounded-lg text-sm" value="Design Services">
-      <div class="grid grid-cols-2 gap-2">
-        <input id="itemQty" type="number" placeholder="Qty" class="border p-3 rounded-lg text-sm" value="1">
-        <input id="itemRate" type="number" placeholder="Rate (INR)" class="border p-3 rounded-lg text-sm" value="25000">
+      <div><p class="text-[11px] font-bold tracking-widest text-zinc-500 mb-3">02 / BILL TO</p>
+        <input id="clientName" placeholder="Client Name — e.g. Rahul Sharma" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm focus:border-white outline-none" />
+        <input id="clientCompany" placeholder="Client Company — e.g. Acme Inc" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm mt-3 focus:border-white outline-none" />
       </div>
 
-      <label class="block text-xs font-semibold pt-4">NOTES</label>
-      <input id="notes" placeholder="Payment due in 7 days" class="w-full border p-3 rounded-lg text-sm" value="Payment due in 7 days. Thanks!">
+      <div><p class="text-[11px] font-bold tracking-widest text-zinc-500 mb-3">03 / PROJECT</p>
+        <input id="projectName" placeholder="Project Title — e.g. Website Design" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm focus:border-white outline-none" />
+        <div class="grid grid-cols-2 gap-3 mt-3">
+          <input id="invNo" class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm font-mono" value="INV-2026-001">
+          <input id="invDate" type="date" class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm">
+        </div>
+      </div>
+
+      <div><p class="text-[11px] font-bold tracking-widest text-zinc-500 mb-3">04 / AMOUNT</p>
+        <input id="itemDesc" placeholder="What did you do? — e.g. Landing Page Design" class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm" value="Design Services">
+        <div class="grid grid-cols-2 gap-3 mt-3">
+          <input id="itemQty" type="number" class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm" value="1">
+          <input id="itemRate" type="number" class="bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl text-sm" value="25000">
+        </div>
+      </div>
     </div>
 
-    <button onclick="downloadPDF()" class="w-full bg-black text-white py-4 rounded-xl font-semibold hover:bg-zinc-800 transition">Download PDF</button>
-    <p class="text-[11px] text-zinc-400 text-center">Push this file to GitHub -> Vercel auto deploys</p>
+    <button onclick="downloadPDF()" class="w-full bg-white text-black py-4 rounded-xl font-bold tracking-tight hover:bg-zinc-200">Download Premium PDF</button>
   </div>
 
-  <!-- RIGHT PREVIEW -->
-  <div class="p-8 lg:p-12 bg-[#f5f5f5]">
-    <div id="invoice" class="bg-white max-w-[800px] mx-auto p-12 shadow-sm border">
-      <div class="flex justify-between items-start">
-        <div>
-          <h2 class="text-4xl font-bold tracking-tighter">INVOY</h2>
-          <p id="p_yourName" class="mt-4 font-semibold"></p>
-        </div>
-        <div class="text-right">
-          <h3 class="text-2xl font-bold">INVOICE</h3>
-          <p id="p_invNo" class="font-mono text-sm mt-1"></p>
-          <p id="p_invDate" class="text-sm text-zinc-500"></p>
-        </div>
+  <!-- PREVIEW - LIGHT PREMIUM PAPER -->
+  <div class="bg-[#f2f2f2] p-6 lg:p-12">
+    <div id="invoice" class="bg-white text-black max-w-[720px] mx-auto p-10 lg:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
+      <div class="flex justify-between">
+        <div><h2 class="text-3xl font-extrabold tracking-tighter">INVOY</h2><p id="p_yourName" class="mt-3 text-sm font-medium"></p></div>
+        <div class="text-right"><p class="text-xs tracking-widest text-zinc-400">INVOICE</p><p id="p_invNo" class="font-mono text-sm font-bold mt-1"></p><p id="p_invDate" class="text-xs text-zinc-500 mt-1"></p></div>
       </div>
 
-      <div class="grid grid-cols-2 mt-12 gap-12">
-        <div>
-          <p class="text-xs font-bold tracking-widest text-zinc-400">BILL TO</p>
-          <p id="p_clientName" class="mt-2 font-semibold text-lg"></p>
-          <p id="p_projectName" class="text-sm text-zinc-600"></p>
-        </div>
-        <div class="text-right">
-          <p class="text-xs font-bold tracking-widest text-zinc-400">PAY VIA UPI</p>
-          <img id="qr" class="w-28 h-28 ml-auto mt-2 border p-1" />
-          <p id="p_upi" class="text-xs font-mono mt-2"></p>
-        </div>
+      <div class="mt-12 grid grid-cols-2 gap-8">
+        <div><p class="text-[10px] font-bold tracking-widest text-zinc-400">BILLED TO</p><p id="p_clientName" class="mt-2 font-bold"></p><p id="p_clientCompany" class="text-sm text-zinc-600"></p><p id="p_projectName" class="text-xs mt-2 px-2 py-1 bg-zinc-100 inline-block rounded"></p></div>
+        <div class="text-right"><p class="text-[10px] font-bold tracking-widest text-zinc-400">PAY WITH UPI</p><div id="qrWrap" class="hidden"><img id="qr" class="w-24 h-24 ml-auto mt-3 border" /><p id="p_upi" class="text-[10px] font-mono mt-2"></p></div><p id="qrEmpty" class="text-[11px] text-zinc-400 mt-3 border border-dashed p-3 rounded-lg">Enter UPI ID on left to generate payment QR</p></div>
       </div>
 
-      <div class="mt-12 border-t border-black">
-        <div class="grid grid-cols-[1fr_80px_120px] py-3 text-xs font-bold tracking-widest">
-          <span>DESCRIPTION</span><span class="text-right">QTY</span><span class="text-right">AMOUNT</span>
-        </div>
-        <div class="grid grid-cols-[1fr_80px_120px] py-4 border-t text-sm">
-          <span id="p_desc"></span><span id="p_qty" class="text-right"></span><span id="p_rate" class="text-right font-semibold"></span>
-        </div>
+      <div class="mt-12">
+        <div class="h-[1px] bg-black"></div>
+        <div class="grid grid-cols-[1fr_60px_110px] py-3 text-[10px] font-bold tracking-widest"><span>SERVICE</span><span class="text-right">QTY</span><span class="text-right">PRICE</span></div>
+        <div class="h-[1px] bg-zinc-200"></div>
+        <div class="grid grid-cols-[1fr_60px_110px] py-5 text-sm"><span id="p_desc" class="font-medium"></span><span id="p_qty" class="text-right font-mono"></span><span id="p_rate" class="text-right font-mono font-bold"></span></div>
+        <div class="h-[1px] bg-zinc-200"></div>
+        <div class="flex justify-end mt-6"><div class="w-56 text-right"><p class="flex justify-between text-xs text-zinc-500"><span>Subtotal</span><span id="p_subtotal" class="font-mono"></span></p><p class="flex justify-between text-lg font-extrabold mt-3"><span>Total</span><span id="p_total"></span></p></div></div>
       </div>
-
-      <div class="mt-8 flex justify-end">
-        <div class="w-[280px] space-y-2">
-          <div class="flex justify-between text-sm"><span class="text-zinc-500">Subtotal</span><span id="p_subtotal" class="font-mono"></span></div>
-          <div class="flex justify-between text-lg font-bold border-t pt-3"><span>Total</span><span id="p_total"></span></div>
-        </div>
-      </div>
-
-      <p id="p_notes" class="mt-16 text-xs text-zinc-500 border-t pt-6"></p>
+      <p class="mt-12 text-[11px] text-zinc-400">Thank you for your business. Payment expected within 7 days.</p>
     </div>
   </div>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
-$('invDate').valueAsDate = new Date();
-
-function update(){
-  $('p_yourName').innerText = $('yourName').value;
-  $('p_clientName').innerText = $('clientName').value;
-  $('p_projectName').innerText = $('projectName').value;
-  $('p_invNo').innerText = $('invNo').value;
-  $('p_invDate').innerText = $('invDate').value;
-  $('p_desc').innerText = $('itemDesc').value;
-  $('p_qty').innerText = $('itemQty').value;
-  let rate = parseInt($('itemRate').value||0);
-  let qty = parseInt($('itemQty').value||1);
-  let total = rate*qty;
-  $('p_rate').innerText = '₹'+rate.toLocaleString('en-IN');
-  $('p_subtotal').innerText = '₹'+total.toLocaleString('en-IN');
-  $('p_total').innerText = '₹'+total.toLocaleString('en-IN');
-  $('p_notes').innerText = $('notes').value;
-  $('p_upi').innerText = $('yourUpi').value;
-  let upiLink = `upi://pay?pa=${$('yourUpi').value}&pn=${$('yourName').value}&am=${total}&cu=INR`;
-  $('qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+const $=id=>document.getElementById(id); $('invDate').valueAsDate=new Date();
+function upd(){
+ $('p_yourName').innerText=$('yourName').value||'Your Studio';
+ $('p_clientName').innerText=$('clientName').value||'Client Name';
+ $('p_clientCompany').innerText=$('clientCompany').value||'';
+ $('p_projectName').innerText=$('projectName').value?`Project: ${$('projectName').value}`:'';
+ $('p_invNo').innerText=$('invNo').value; $('p_invDate').innerText=$('invDate').value;
+ $('p_desc').innerText=$('itemDesc').value; $('p_qty').innerText=$('itemQty').value;
+ let r=parseInt($('itemRate').value||0),q=parseInt($('itemQty').value||1),t=r*q;
+ $('p_rate').innerText='₹'+r.toLocaleString('en-IN'); $('p_subtotal').innerText='₹'+t.toLocaleString('en-IN'); $('p_total').innerText='₹'+t.toLocaleString('en-IN');
+ let upi=$('yourUpi').value.trim();
+ if(upi.includes('@') && upi.length>5){
+   $('qrWrap').classList.remove('hidden'); $('qrEmpty').classList.add('hidden');
+   $('p_upi').innerText=upi;
+   let link=`upi://pay?pa=${upi}&pn=${$('yourName').value}&am=${t}&cu=INR`;
+   $('qr').src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+ } else {
+   $('qrWrap').classList.add('hidden'); $('qrEmpty').classList.remove('hidden');
+ }
 }
-document.querySelectorAll('input').forEach(i=>i.addEventListener('input', update));
-update();
-
-function downloadPDF(){
-  const el = document.getElementById('invoice');
-  html2pdf().from(el).set({margin:0.3, filename:`${$('invNo').value}.pdf`, html2canvas:{scale:2}}).save();
-}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd)); upd();
+function downloadPDF(){ html2pdf().from(document.getElementById('invoice')).set({margin:0.2, filename:`${$('invNo').value}.pdf`, html2canvas:{scale:3}}).save(); }
 </script>
 </body>
 </html>
