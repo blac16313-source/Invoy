@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INVOY - Send. Get Paid.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#fafafa] text-zinc-900">
+<div class="max-w-[1400px] mx-auto grid-cols-1 lg:grid-cols-[420px_1fr] min-h-screen">
+
+  <!-- LEFT FORM -->
+  <div class="bg-white border-r p-8 space-y-6 overflow-y-auto">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tighter">INVOY</h1>
+      <p class="text-sm text-zinc-500">Send. Get Paid.</p>
+    </div>
+
+    <div class="space-y-4">
+      <label class="block text-xs font-semibold">YOUR DETAILS</label>
+      <input id="yourName" placeholder="Your Name / Studio" class="w-full border p-3 rounded-lg text-sm" value="Your Studio">
+      <input id="yourUpi" placeholder="Your UPI ID (for QR)" class="w-full border p-3 rounded-lg text-sm" value="yourname@upi">
+
+      <label class="block text-xs font-semibold pt-4">CLIENT DETAILS</label>
+      <input id="clientName" placeholder="Client Name" class="w-full border p-3 rounded-lg text-sm" value="Acme Inc">
+      <input id="projectName" placeholder="Project Title" class="w-full border p-3 rounded-lg text-sm" value="Website Design">
+
+      <label class="block text-xs font-semibold pt-4">INVOICE DETAILS</label>
+      <div class="grid grid-cols-2 gap-2">
+        <input id="invNo" class="border p-3 rounded-lg text-sm" value="INV-001">
+        <input id="invDate" type="date" class="border p-3 rounded-lg text-sm">
+      </div>
+
+      <label class="block text-xs font-semibold pt-4">ITEMS</label>
+      <input id="itemDesc" placeholder="Description" class="w-full border p-3 rounded-lg text-sm" value="Design Services">
+      <div class="grid grid-cols-2 gap-2">
+        <input id="itemQty" type="number" placeholder="Qty" class="border p-3 rounded-lg text-sm" value="1">
+        <input id="itemRate" type="number" placeholder="Rate (INR)" class="border p-3 rounded-lg text-sm" value="25000">
+      </div>
+
+      <label class="block text-xs font-semibold pt-4">NOTES</label>
+      <input id="notes" placeholder="Payment due in 7 days" class="w-full border p-3 rounded-lg text-sm" value="Payment due in 7 days. Thanks!">
+    </div>
+
+    <button onclick="downloadPDF()" class="w-full bg-black text-white py-4 rounded-xl font-semibold hover:bg-zinc-800 transition">Download PDF</button>
+    <p class="text-[11px] text-zinc-400 text-center">Push this file to GitHub -> Vercel auto deploys</p>
+  </div>
+
+  <!-- RIGHT PREVIEW -->
+  <div class="p-8 lg:p-12 bg-[#f5f5f5]">
+    <div id="invoice" class="bg-white max-w-[800px] mx-auto p-12 shadow-sm border">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 class="text-4xl font-bold tracking-tighter">INVOY</h2>
+          <p id="p_yourName" class="mt-4 font-semibold"></p>
+        </div>
+        <div class="text-right">
+          <h3 class="text-2xl font-bold">INVOICE</h3>
+          <p id="p_invNo" class="font-mono text-sm mt-1"></p>
+          <p id="p_invDate" class="text-sm text-zinc-500"></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 mt-12 gap-12">
+        <div>
+          <p class="text-xs font-bold tracking-widest text-zinc-400">BILL TO</p>
+          <p id="p_clientName" class="mt-2 font-semibold text-lg"></p>
+          <p id="p_projectName" class="text-sm text-zinc-600"></p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs font-bold tracking-widest text-zinc-400">PAY VIA UPI</p>
+          <img id="qr" class="w-28 h-28 ml-auto mt-2 border p-1" />
+          <p id="p_upi" class="text-xs font-mono mt-2"></p>
+        </div>
+      </div>
+
+      <div class="mt-12 border-t border-black">
+        <div class="grid grid-cols-[1fr_80px_120px] py-3 text-xs font-bold tracking-widest">
+          <span>DESCRIPTION</span><span class="text-right">QTY</span><span class="text-right">AMOUNT</span>
+        </div>
+        <div class="grid grid-cols-[1fr_80px_120px] py-4 border-t text-sm">
+          <span id="p_desc"></span><span id="p_qty" class="text-right"></span><span id="p_rate" class="text-right font-semibold"></span>
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-end">
+        <div class="w-[280px] space-y-2">
+          <div class="flex justify-between text-sm"><span class="text-zinc-500">Subtotal</span><span id="p_subtotal" class="font-mono"></span></div>
+          <div class="flex justify-between text-lg font-bold border-t pt-3"><span>Total</span><span id="p_total"></span></div>
+        </div>
+      </div>
+
+      <p id="p_notes" class="mt-16 text-xs text-zinc-500 border-t pt-6"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+$('invDate').valueAsDate = new Date();
+
+function update(){
+  $('p_yourName').innerText = $('yourName').value;
+  $('p_clientName').innerText = $('clientName').value;
+  $('p_projectName').innerText = $('projectName').value;
+  $('p_invNo').innerText = $('invNo').value;
+  $('p_invDate').innerText = $('invDate').value;
+  $('p_desc').innerText = $('itemDesc').value;
+  $('p_qty').innerText = $('itemQty').value;
+  let rate = parseInt($('itemRate').value||0);
+  let qty = parseInt($('itemQty').value||1);
+  let total = rate*qty;
+  $('p_rate').innerText = '₹'+rate.toLocaleString('en-IN');
+  $('p_subtotal').innerText = '₹'+total.toLocaleString('en-IN');
+  $('p_total').innerText = '₹'+total.toLocaleString('en-IN');
+  $('p_notes').innerText = $('notes').value;
+  $('p_upi').innerText = $('yourUpi').value;
+  let upiLink = `upi://pay?pa=${$('yourUpi').value}&pn=${$('yourName').value}&am=${total}&cu=INR`;
+  $('qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input', update));
+update();
+
+function downloadPDF(){
+  const el = document.getElementById('invoice');
+  html2pdf().from(el).set({margin:0.3, filename:`${$('invNo').value}.pdf`, html2canvas:{scale:2}}).save();
+}
+</script>
+</body>
+</html>
