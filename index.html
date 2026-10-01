@@ -1,112 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INVOY - Send. Get Paid.</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;700&family=Syne:wght@600&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Inter',sans-serif;background:#FDFBF6;color:#1A1A1A}
-.serif{font-family:'Instrument Serif',serif}
-.invoy-card{background:#FFF;border:1px solid #EAE6DE;box-shadow:0 8px 32px rgba(0,0,0,0.04)}
-.invoy-input{background:#F9F7F2;border:1px solid #EAE6DE;transition:all 0.2s}
-.invoy-input:focus{background:#FFF;border-color:#6B7F6B;outline:none;box-shadow:0 0 0 3px rgba(107,127,107,0.15)}
-#previewLogo{width:64px;height:64px;border-radius:16px}
-#previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:16px}
-.sage-card{background:#F6F5F1!important; border-color:#E8E6DF!important}
-.sage-accent{color:#5A6E5A}
-@media print{.no-print{display:none} #qr{border:1px solid #eee}}
-</style>
-</head>
-<body>
+.serif{font-family:'Instrument Serif',serif}.syne{font-family:'Syne',sans-serif}
+.invoy-input{background:#F9F7F2;border:1px solid #EAE6DE}.invoy-input:focus{border-color:#111;outline:none}
+#previewLogo{width:72px;height:72px;border-radius:18px} #previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:18px}
+@media print{.no-print{display:none!important}}
+</style></head><body>
 <header class="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center no-print">
-  <div class="flex items-center gap-3"><div class="w-9 h-9 bg-[#2F3A2F] text-[#F6F5F1] flex items-center justify-center serif text-xl rounded-[10px]">I</div><span class="serif text-[24px]">invoy.</span></div>
-  <div class="flex items-center gap-3">
-    <div id="freeLeft" class="text-[11px] tracking-[0.14em] uppercase opacity-60 border px-3 py-1.5 rounded-full bg-white">5 FREE LEFT</div>
-    <button class="text-[11px] border border-black px-4 py-2 rounded-full">Login v4</button>
-  </div>
-</header>
+<div class="flex items-center gap-3"><div class="w-9 h-9 bg-black text-white flex items-center justify-center serif text-xl rounded-[10px]">I</div><span class="serif text-[24px]">invoy.</span></div>
+<div id="freeLeft" class="text-[11px] tracking-widest border px-3 py-1.5 rounded-full bg-white">5 FREE / 5</div></header>
+<div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.1fr_0.9fr] gap-8 pb-20">
+<div class="no-print"><div class="bg-white border border-[#EAE6DE] rounded-[24px] p-7">
+<h2 class="serif text-[32px]">Create</h2><div class="mt-5"><label class="text-[11px] uppercase tracking-widest opacity-60">Logo</label><input type="file" id="logoInput" accept="image/*" class="mt-2 block text-sm"></div>
+<div class="grid grid-cols-2 gap-4 mt-4"><div><input id="fromName" class="invoy-input w-full px-4 py-3 rounded-xl text-sm" placeholder="Your Studio"><input id="upiId" class="invoy-input w-full mt-3 px-4 py-3 rounded-xl text-sm" placeholder="upi id"></div><div><input id="toName" class="invoy-input w-full px-4 py-3 rounded-xl text-sm" placeholder="Bill To"><input id="projectName" class="invoy-input w-full mt-3 px-4 py-3 rounded-xl text-sm" placeholder="Project name"></div></div>
+<div id="itemsList" class="space-y-3 mt-6"></div><button onclick="addItem()" class="text-xs mt-3 px-3 py-1.5 rounded-full border">+ Add item</button>
+<button onclick="generate()" class="w-full mt-8 bg-black text-white py-4 rounded-xl text-sm">Generate PDF →</button>
+</div><div class="bg-white border border-[#EAE6DE] rounded-[24px] p-6 mt-6"><h3 class="serif text-xl">History</h3><div id="history" class="mt-3 space-y-2"></div><p id="noHist" class="text-xs opacity-40 mt-2">Shows name + date</p></div></div>
 
-<div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 pb-20">
-<div class="no-print">
-<div class="invoy-card rounded-[24px] p-7 lg:p-8">
-  <h2 class="serif text-[32px] leading-none mb-1">Create invoice</h2><p class="text-[12px] opacity-50 mb-6">Soft Sage • Premium for freelancers</p>
-  <div class="mb-6"><label class="text-[11px] uppercase tracking-widest opacity-60">Your Logo (bigger now)</label><input type="file" id="logoInput" accept="image/*" class="mt-2 block text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-black file:text-white file:text-xs"></div>
-  <div class="grid grid-cols-2 gap-4 mb-4">
-    <div><label class="text-[11px] uppercase tracking-widest opacity-60">From</label><input id="fromName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Jatin Studio"></div>
-    <div><label class="text-[11px] uppercase tracking-widest opacity-60">Bill To</label><input id="toName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Acme Inc"></div>
-  </div>
-  <div class="mb-5"><label class="text-[11px] uppercase tracking-widest opacity-60">Your UPI ID</label><input id="upiId" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm font-medium" placeholder="jatin@okicici"></div>
-  <div class="flex justify-between items-center mt-8 mb-3"><label class="text-[11px] uppercase tracking-widest opacity-60">Items</label><button onclick="addItem()" class="text-xs px-3 py-1.5 rounded-full border border-[#EAE6DE] hover:bg-black hover:text-white transition">+ Add</button></div>
-  <div id="itemsList" class="space-y-3"></div>
-  <div class="mt-8 p-4 rounded-xl bg-[#F6F5F1] border border-[#E8E6DF] flex justify-between items-center">
-    <div><p class="text-sm font-medium sage-accent">Add GST? <span class="text-[11px] opacity-60">(OFF by default)</span></p><p class="text-[11px] opacity-50 mt-1">ON only if you are GST registered</p></div>
-    <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" id="gstToggle" class="sr-only peer"><div class="w-11 h-6 bg-[#E8E6DF] rounded-full peer-checked:bg-[#5A6E5A] transition"></div><div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full peer-checked:translate-x-5 transition"></div></label>
-  </div>
-  <div id="gstRateWrap" class="hidden mt-3"><select id="gstRate" class="invoy-input w-full px-4 py-3 rounded-xl text-sm"><option value="18">18% Services</option><option value="12">12%</option><option value="5">5%</option></select></div>
-  <button onclick="generate()" class="w-full mt-8 bg-[#2F3A2F] text-[#F6F5F1] py-4 rounded-xl text-sm font-medium hover:bg-black transition">Generate PDF →</button>
-  <button onclick="buyPro()" class="w-full mt-3 bg-white border border-[#2F3A2F] py-4 rounded-xl text-sm">Get Pro ₹999/yr — Unlimited + Themes</button>
+<div class="lg:sticky top-8"><div id="invoiceCard" class="bg-[#F6F5F1] border border-[#E8E6DF] rounded-[28px] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.08)]">
+<div class="bg-[#0F1410] text-[#F6F5F1] p-8">
+<div class="flex justify-between text-[10px] tracking-[0.2em] uppercase opacity-60"><span id="invNumTop">INVOICE • 001</span><span id="dateTop">01 OCT 2026</span></div>
+<div class="mt-10 flex gap-6"><div id="previewLogo" class="bg-white/10 border border-white/20 flex items-center justify-center text-[10px] tracking-widest shrink-0">LOGO</div><div><p id="fromPreview" class="syne text-[12px] tracking-[0.2em] uppercase opacity-60">YOUR STUDIO</p><p id="projectPreview" class="serif text-[22px] leading-tight mt-1">Brand Identity</p></div></div>
+<div class="mt-10"><p class="text-[10px] tracking-[0.2em] uppercase opacity-50">TOTAL DUE</p><p id="totalBig" class="serif text-[56px] leading-none mt-2">₹15,000</p><div class="w-full h-[1px] bg-white/20 mt-6"></div>
+<p class="text-[11px] mt-4 tracking-wide"><span class="opacity-50 uppercase">Billed to:</span> <span id="billToBig" class="serif text-[16px] ml-2">Acme Inc</span></p></div>
 </div>
-<div class="invoy-card rounded-[24px] p-6 mt-6">
-  <h3 class="serif text-xl mb-3">Last invoices</h3><div id="history" class="space-y-2"></div><p id="noHist" class="text-xs opacity-40">No invoices yet. Shows name + date.</p>
+<div class="p-8 bg-[#F6F5F1]">
+<div id="previewItems" class="space-y-3 text-[13px]"></div>
+<div class="border-t border-[#D8D5CC] mt-6 pt-4 flex justify-between text-[13px]"><span class="opacity-60">Subtotal</span><span id="subSmall">₹15,000</span></div>
+<div class="mt-8 flex justify-between items-end border-t border-black pt-6">
+<div><p class="text-[10px] uppercase tracking-widest opacity-60 mb-2">Scan to pay • UPI</p><div id="qr" class="p-2 bg-white rounded-xl border"></div><p id="upiSmall" class="text-[10px] opacity-40 mt-2 font-mono"></p></div>
+<div class="text-right"><p class="text-[10px] uppercase opacity-50">Amount</p><p id="totalSmall" class="serif text-[28px]">₹15,000</p></div>
 </div>
-</div>
-
-<div class="lg:sticky top-8 h-fit">
-<div class="flex gap-2 mb-3 no-print">
-  <button onclick="setTheme('sage')" title="Sage (free)" class="w-8 h-8 rounded-full bg-[#6B7F6B] border-2 border-white shadow ring-1 ring-[#E8E6DF]"></button>
-  <button onclick="setTheme('clay')" title="Clay (Pro)" class="w-8 h-8 rounded-full bg-[#8C4A32] border-2 border-white shadow"></button>
-  <button onclick="setTheme('lilac')" title="Lilac (Pro)" class="w-8 h-8 rounded-full bg-[#B8A9C9] border-2 border-white shadow"></button>
-  <span class="text-[10px] opacity-40 ml-2 mt-2 tracking-widest uppercase">Themes • Sage free</span>
-</div>
-<div id="invoiceCard" class="invoy-card sage-card rounded-[24px] p-8">
-  <div id="invoicePreview">
-    <div class="flex justify-between items-start mb-8"><div id="previewLogo" class="bg-white border border-[#E8E6DF] flex items-center justify-center text-[10px] opacity-40 tracking-widest">LOGO</div><div class="text-right"><p class="serif text-[30px] leading-none sage-accent">Invoice</p><p id="previewDate" class="text-xs opacity-60 mt-1"></p><p id="previewInvNum" class="text-[11px] opacity-40 mt-1 font-mono"></p></div></div>
-    <div id="previewItems" class="space-y-2 text-sm"></div>
-    <div class="border-t border-dashed border-[#D8D5CC] mt-6 pt-4 space-y-2 text-sm">
-      <div class="flex justify-between opacity-60"><span>Subtotal</span><span id="previewSub">₹0</span></div>
-      <div id="previewGstRow" class="hidden flex justify-between opacity-60"><span>GST (<span id="previewGstPer">18</span>%)</span><span id="previewGst">₹0</span></div>
-    </div>
-    <div class="mt-6 flex justify-between items-end border-t border-[#2F3A2F] pt-5">
-      <div><p class="text-[10px] uppercase tracking-widest opacity-60 mb-2 sage-accent">Scan to pay via UPI</p><div id="qr" class="p-2.5 bg-white border border-[#E8E6DF] rounded-xl"></div><p id="previewUpi" class="text-[10px] opacity-40 mt-2"></p></div>
-      <div class="text-right"><p class="text-[11px] uppercase opacity-60 tracking-widest">Total Due</p><p id="previewTotalDup" class="serif text-[36px] leading-none mt-1">₹0</p><p id="previewTotal" class="hidden">₹0</p></div>
-    </div>
-    <div class="mt-8 pt-4 border-t border-dashed border-[#D8D5CC] flex justify-between items-center">
-      <span class="text-[10px] opacity-50 tracking-wide">ID: <span id="verifyId">INV-2026-XXXX</span> • Generated via INVOY</span>
-      <span class="text-[10px] opacity-30">invoy.co</span>
-    </div>
-    <p class="text-[9px] opacity-30 mt-3 text-center leading-relaxed">Tax compliance is issuer's responsibility. INVOY does not process payments.</p>
-  </div>
-</div>
-</div>
-</div>
-
+<div class="mt-8 flex justify-between text-[9px] opacity-40 uppercase tracking-widest"><span>ID: <span id="verifyId">INV-2026-XXXX</span> • invoy.co</span><span>Generated via INVOY</span></div>
+</div></div></div></div>
 <script>
-let items=[{name:'Brand Identity',qty:1,price:15000},{name:'Social Pack',qty:1,price:5000}];
-let freeLeft=parseInt(localStorage.getItem('invoy_left_v5')||'5');
-let history=JSON.parse(localStorage.getItem('invoy_hist')||'[]');
-function updateFree(){document.getElementById('freeLeft').innerText=freeLeft>0?freeLeft+' FREE LEFT / 5':'LIMIT REACHED — BUY PRO';}
-function renderHistory(){const h=document.getElementById('history'), n=document.getElementById('noHist'); if(history.length===0){h.innerHTML=''; n.style.display='block'; return;} n.style.display='none'; h.innerHTML=history.slice().reverse().map(x=>`<div class="flex justify-between items-center p-3 rounded-xl bg-[#F9F7F2] border border-[#EAE6DE]"><div><div class="font-medium text-[13px]">${x.client}</div><div class="text-[11px] opacity-60">${x.date} • ${x.invNum}</div></div><div class="font-medium text-[13px]">₹${x.total.toLocaleString('en-IN')}</div></div>`).join('');}
-updateFree(); renderHistory();
-function renderItems(){const el=document.getElementById('itemsList'); el.innerHTML=''; items.forEach((it,i)=>{el.innerHTML+=`<div class="grid grid-cols-[1fr_60px_90px_28px] gap-2"><input value="${it.name}" oninput="items[${i}].name=this.value;updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.qty}" oninput="items[${i}].qty=parseFloat(this.value)||0;updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.price}" oninput="items[${i}].price=parseFloat(this.value)||0;updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><button onclick="removeItem(${i})" class="text-xs opacity-40 hover:opacity-100">✕</button></div>`;}); updatePreview();}
+let items=[{name:'Brand Identity',qty:1,price:15000}];
+let freeLeft=parseInt(localStorage.getItem('invoy_left_v5')||'5'); let hist=JSON.parse(localStorage.getItem('invoy_hist')||'[]');
+function updFree(){document.getElementById('freeLeft').innerText=freeLeft>0?freeLeft+' FREE / 5':'LIMIT — BUY PRO';}
+function renderHist(){const h=document.getElementById('history'); if(!hist.length){h.innerHTML=''; document.getElementById('noHist').style.display='block'; return;} document.getElementById('noHist').style.display='none'; h.innerHTML=hist.slice().reverse().map(x=>`<div class="flex justify-between p-3 rounded-xl bg-[#F9F7F2] border text-[12px]"><span>${x.client} • ${x.date}</span><span>₹${x.total.toLocaleString('en-IN')}</span></div>`).join('');}
+updFree(); renderHist();
+function renderItems(){const el=document.getElementById('itemsList'); el.innerHTML=''; items.forEach((it,i)=>{el.innerHTML+=`<div class="grid grid-cols-[1fr_60px_90px_24px] gap-2"><input value="${it.name}" oninput="items[${i}].name=this.value;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.qty}" oninput="items[${i}].qty=+this.value||0;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.price}" oninput="items[${i}].price=+this.value||0;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><button onclick="items.length>1&&items.splice(${i},1)&&renderItems()" class="opacity-40">✕</button></div>`}); upd();}
 function addItem(){items.push({name:'',qty:1,price:0}); renderItems();}
-function removeItem(i){if(items.length>1){items.splice(i,1); renderItems();}}
-document.getElementById('gstToggle').addEventListener('change',e=>{document.getElementById('gstRateWrap').classList.toggle('hidden',!e.target.checked); updatePreview();});
-document.getElementById('gstRate').addEventListener('change',updatePreview);
-document.getElementById('logoInput').addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`; document.getElementById('previewLogo').style.opacity='1';}; r.readAsDataURL(f);});
-function calc(){const sub=items.reduce((s,it)=>s+it.qty*it.price,0); const on=document.getElementById('gstToggle').checked; const rate=parseFloat(document.getElementById('gstRate').value)||0; const gst=on?sub*rate/100:0; return {sub,gst,total:sub+gst,rate,on};}
-function updatePreview(){const c=calc(); document.getElementById('previewSub').innerText='₹'+c.sub.toLocaleString('en-IN'); document.getElementById('previewGst').innerText='₹'+c.gst.toLocaleString('en-IN'); document.getElementById('previewTotal').innerText='₹'+c.total.toLocaleString('en-IN'); document.getElementById('previewTotalDup').innerText='₹'+c.total.toLocaleString('en-IN'); document.getElementById('previewGstPer').innerText=c.rate; document.getElementById('previewGstRow').classList.toggle('hidden',!c.on); const now=new Date(); document.getElementById('previewDate').innerText=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between py-1"><span class="opacity-80">${it.name||'Untitled'} <span class="opacity-40">x ${it.qty}</span></span><span class="font-medium">₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join(''); const upi=document.getElementById('upiId').value||'demo@upi'; document.getElementById('previewUpi').innerText=upi; const link=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Freelancer'}&am=${c.total}&cu=INR`; document.getElementById('qr').innerHTML=''; new QRCode(document.getElementById('qr'),{text:link,width:116,height:116,colorDark:"#2F3A2F",colorLight:"#FFFFFF",correctLevel:QRCode.CorrectLevel.H});}
-['fromName','upiId','toName'].forEach(id=>document.getElementById(id).addEventListener('input',updatePreview));
-function generate(){if(freeLeft<=0){ buyPro(); return; } const c=calc(); const invNum='INV-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*9000+1000); document.getElementById('previewInvNum').innerText=invNum; document.getElementById('verifyId').innerText=invNum; const client=document.getElementById('toName').value||'Client'; const dateStr=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); history.push({client,total:c.total,date:dateStr,invNum}); if(history.length>5) history=history.slice(-5); localStorage.setItem('invoy_hist',JSON.stringify(history)); freeLeft--; localStorage.setItem('invoy_left_v5',freeLeft); updateFree(); renderHistory(); window.print();}
-function buyPro(){ alert('Pro ₹999/yr — Unlimited + Clay & Lilac themes + Remove footer watermark. DM @j_atin___'); }
-function setTheme(t){
- const card=document.getElementById('invoiceCard');
- if(t==='sage'){ card.style.background='#F6F5F1'; card.style.color='#2F3A2F'; }
- if(t==='clay'){ if(freeLeft>0){alert('Clay is Pro — preview only 3 sec'); setTimeout(()=>setTheme('sage'),3000);} card.style.background='#F5EDE6'; card.style.color='#4A2E26'; }
- if(t==='lilac'){ if(freeLeft>0){alert('Lilac is Pro — preview only 3 sec'); setTimeout(()=>setTheme('sage'),3000);} card.style.background='#EDE8F0'; card.style.color='#2B2B33'; }
-}
+document.getElementById('logoInput').addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`;}; r.readAsDataURL(f);});
+function calc(){return items.reduce((s,it)=>s+it.qty*it.price,0);}
+function upd(){const total=calc(); document.getElementById('totalBig').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('totalSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('subSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('billToBig').innerText=document.getElementById('toName').value||'Client'; document.getElementById('fromPreview').innerText=document.getElementById('fromName').value||'YOUR STUDIO'; document.getElementById('projectPreview').innerText=document.getElementById('projectName').value||items[0]?.name||'Project'; document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between"><span>${it.name||'Item'} <span class="opacity-40">× ${it.qty}</span></span><span>₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join(''); const upi=document.getElementById('upiId').value||'demo@upi'; document.getElementById('upiSmall').innerText=upi; const link=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Studio'}&am=${total}&cu=INR`; document.getElementById('qr').innerHTML=''; new QRCode(document.getElementById('qr'),{text:link,width:112,height:112,colorDark:"#0F1410",colorLight:"#FFFFFF"}); const now=new Date(); document.getElementById('dateTop').innerText=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();}
+['fromName','toName','upiId','projectName'].forEach(id=>document.getElementById(id).addEventListener('input',upd));
+function generate(){if(freeLeft<=0){alert('Buy Pro'); return;} const total=calc(); const inv='INV-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*9000+1000); document.getElementById('invNumTop').innerText='INVOICE • '+inv; document.getElementById('verifyId').innerText=inv; const client=document.getElementById('toName').value||'Client'; hist.push({client,total,date:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}),inv}); if(hist.length>5) hist=hist.slice(-5); localStorage.setItem('invoy_hist',JSON.stringify(hist)); freeLeft--; localStorage.setItem('invoy_left_v5',freeLeft); updFree(); renderHist(); window.print();}
 renderItems();
-</script>
-</body>
-</html>
+</script></body></html>
