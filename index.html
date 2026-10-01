@@ -3,36 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INVOY - Invoices for freelancers</title>
+<title>INVOY - Send. Get Paid.</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   body{font-family:'Inter',sans-serif;background:#FDFBF6;color:#1A1A1A}
- .serif{font-family:'Instrument Serif',serif}
- .invoy-card{background:#FFFFFF;border:1px solid #EAE6DE;box-shadow:0 4px 24px rgba(26,26,26,0.04)}
- .invoy-input{background:#F9F7F2;border:1px solid #EAE6DE;transition:all 0.2s}
- .invoy-input:focus{background:#FFFFFF;border-color:#1A1A1A;outline:none;box-shadow:0 0 0 3px #F0EDE5}
+.serif{font-family:'Instrument Serif',serif}
+.invoy-card{background:#FFFFFF;border:1px solid #EAE6DE;box-shadow:0 4px 24px rgba(26,26,26,0.04)}
+.invoy-input{background:#F9F7F2;border:1px solid #EAE6DE;transition:all 0.2s}
+.invoy-input:focus{background:#FFFFFF;border-color:#1A1A1A;outline:none;box-shadow:0 0 0 3px #F0EDE5}
+ #previewLogo{width:56px;height:56px;border-radius:14px}
+ #previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:14px}
 </style>
 </head>
 <body class="min-h-screen">
 
-<!-- Header -->
 <header class="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center">
   <div class="flex items-center gap-3">
-    <div class="w-8 h-8 bg-[#1A1A1A] text-[#FDFBF6] flex items-center justify-center serif text-xl rounded-[8px]">I</div>
-    <span class="serif text-[22px] tracking-[-0.02em]">invoy.</span>
+    <div class="w-9 h-9 bg-[#1A1A1A] text-[#FDFBF6] flex items-center justify-center serif text-xl rounded-[10px]">I</div>
+    <span class="serif text-[24px] tracking-[-0.02em]">invoy.</span>
   </div>
-  <div class="text-[11px] tracking-[0.14em] uppercase opacity-60">v3 • GST READY • OFFLINE QR</div>
+  <div class="text-[11px] tracking-[0.14em] uppercase opacity-60" id="freeLeft">3 FREE LEFT • GST READY • OFFLINE QR</div>
 </header>
 
 <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 pb-20">
 
-<!-- LEFT FORM -->
 <div class="invoy-card rounded-[20px] p-7 lg:p-8">
-  <h2 class="serif text-3xl mb-6">Create invoice</h2>
+  <h2 class="serif text-[32px] leading-none mb-6">Create invoice</h2>
 
-  <!-- Logo -->
   <div class="mb-6">
     <label class="text-[11px] uppercase tracking-widest opacity-60">Your Logo (optional)</label>
     <input type="file" id="logoInput" accept="image/*" class="mt-2 block text-sm">
@@ -48,18 +47,16 @@
     <input id="upiId" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm font-medium" placeholder="jatin@okicici">
   </div>
 
-  <!-- Items -->
   <div class="flex justify-between items-center mt-8 mb-3">
     <label class="text-[11px] uppercase tracking-widest opacity-60">Items</label>
     <button onclick="addItem()" class="text-xs px-3 py-1.5 rounded-full border border-[#EAE6DE] hover:bg-[#1A1A1A] hover:text-white transition">+ Add</button>
   </div>
   <div id="itemsList" class="space-y-3"></div>
 
-  <!-- GST TOGGLE -->
   <div class="mt-8 p-4 rounded-xl bg-[#F9F7F2] border border-[#EAE6DE] flex justify-between items-center">
     <div>
       <p class="text-sm font-medium">Add GST? <span class="text-[11px] opacity-60 font-normal">(OFF by default)</span></p>
-      <p class="text-[11px] opacity-60 mt-1 max-w-[26ch]">Turn ON if your turnover is above ₹20L or you are GST registered. Talk to your CA.</p>
+      <p class="text-[11px] opacity-60 mt-1 max-w-[28ch]">Turn ON only if GST registered. You must pay GST to govt before 20th next month.</p>
     </div>
     <label class="relative inline-flex items-center cursor-pointer">
       <input type="checkbox" id="gstToggle" class="sr-only peer">
@@ -68,27 +65,28 @@
     </label>
   </div>
   <div id="gstRateWrap" class="hidden mt-3">
-    <select id="gstRate" class="invoy-input w-full px-4 py-3 rounded-xl text-sm"><option value="18">18% (Freelance Services)</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select>
+    <select id="gstRate" class="invoy-input w-full px-4 py-3 rounded-xl text-sm"><option value="18">18% (Services)</option><option value="12">12%</option><option value="5">5%</option></select>
   </div>
 
-  <button onclick="generate()" class="w-full mt-8 bg-[#1A1A1A] text-[#FDFBF6] py-4 rounded-xl text-sm tracking-wide font-medium hover:opacity-90 transition">Generate Invoice PDF →</button>
+  <button onclick="generate()" class="w-full mt-8 bg-[#1A1A1A] text-[#FDFBF6] py-4 rounded-xl text-sm tracking-wide font-medium hover:opacity-90 transition">Generate PDF →</button>
+  <button onclick="alert('Pro ₹999/yr - DM @j_atin___ on X with payment screenshot. I will send Pro version (no watermark + unlimited)')" class="w-full mt-3 bg-white text-[#1A1A1A] border border-[#1A1A1A] py-4 rounded-xl text-sm tracking-wide font-medium">Get Pro — ₹999/yr</button>
 </div>
 
-<!-- RIGHT PREVIEW -->
 <div class="invoy-card rounded-[20px] p-8 lg:sticky top-8 h-fit">
   <div id="invoicePreview" class="min-h-[480px]">
     <div class="flex justify-between items-start mb-8">
-      <div id="previewLogo" class="w-10 h-10 bg-[#F9F7F2] rounded-xl border border-[#EAE6DE] flex items-center justify-center text-[11px] opacity-40">LOGO</div>
-      <div class="text-right"><p class="serif text-2xl">Invoice</p><p id="previewDate" class="text-xs opacity-60 mt-1"></p></div>
+      <div id="previewLogo" class="bg-[#F9F7F2] border border-[#EAE6DE] flex items-center justify-center text-[10px] opacity-40">LOGO</div>
+      <div class="text-right"><p class="serif text-[28px] leading-none">Invoice</p><p id="previewDate" class="text-xs opacity-60 mt-1"></p></div>
     </div>
     <div id="previewItems" class="space-y-3 text-sm"></div>
     <div class="border-t border-dashed border-[#EAE6DE] mt-6 pt-4 space-y-2 text-sm">
       <div class="flex justify-between opacity-60"><span>Subtotal</span><span id="previewSub">₹0</span></div>
       <div id="previewGstRow" class="hidden flex justify-between opacity-60"><span>GST (<span id="previewGstPer">18</span>%)</span><span id="previewGst">₹0</span></div>
-      <div class="flex justify-between font-semibold text-base"><span>Total</span><span id="previewTotal">₹0</span></div>
+      <div class="flex justify-between font-semibold text-[16px]"><span>Total</span><span id="previewTotal">₹0</span></div>
     </div>
     <div class="mt-8 flex justify-center"><div id="qr"></div></div>
-    <p class="text-[10px] opacity-50 mt-8 text-center leading-relaxed">This invoice is generated by INVOY. Tax compliance is the responsibility of the invoice issuer. INVOY does not collect or process payments.</p>
+    <p id="wm" class="text-[10px] opacity-40 mt-8 text-center tracking-wide">MADE WITH INVOY • FREE VERSION — Get Pro to remove • invoy.co</p>
+    <p class="text-[10px] opacity-30 mt-2 text-center leading-relaxed">Tax compliance is issuer's responsibility. INVOY does not process payments.</p>
   </div>
 </div>
 
@@ -97,13 +95,17 @@
 <script>
 let items = [{name:'Design work', qty:1, price:10000}];
 const itemsList = document.getElementById('itemsList');
+let freeLeft = parseInt(localStorage.getItem('invoy_left')||'3');
+function updateFree(){ document.getElementById('freeLeft').innerText = freeLeft>0? freeLeft+' FREE LEFT • GST READY • OFFLINE QR' : 'LIMIT REACHED — GET PRO'; }
+updateFree();
+
 function renderItems(){
  itemsList.innerHTML='';
  items.forEach((it,i)=>{
   itemsList.innerHTML+=`<div class="grid grid-cols-[1fr_60px_90px_28px] gap-2">
    <input value="${it.name}" oninput="items[${i}].name=this.value; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm" placeholder="Item">
-   <input type="number" value="${it.qty}" oninput="items[${i}].qty=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm" placeholder="Qty">
-   <input type="number" value="${it.price}" oninput="items[${i}].price=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm" placeholder="Price">
+   <input type="number" value="${it.qty}" oninput="items[${i}].qty=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm">
+   <input type="number" value="${it.price}" oninput="items[${i}].price=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm">
    <button onclick="removeItem(${i})" class="text-xs opacity-40 hover:opacity-100">✕</button>
   </div>`;
  });
@@ -113,13 +115,12 @@ function addItem(){items.push({name:'',qty:1,price:0}); renderItems();}
 function removeItem(i){if(items.length>1){items.splice(i,1); renderItems();}}
 document.getElementById('gstToggle').addEventListener('change',e=>{
  document.getElementById('gstRateWrap').classList.toggle('hidden',!e.target.checked);
- if(e.target.checked){ alert('Reminder: If you collect GST, you must pay it to govt via GST portal before 20th next month.'); }
  updatePreview();
 });
 document.getElementById('gstRate').addEventListener('change',updatePreview);
 document.getElementById('logoInput').addEventListener('change',e=>{
  const file=e.target.files[0]; if(!file) return;
- const reader=new FileReader(); reader.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}" class="w-full h-full object-contain rounded-xl">`;}; reader.readAsDataURL(file);
+ const reader=new FileReader(); reader.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`; document.getElementById('previewLogo').style.opacity='1';}; reader.readAsDataURL(file);
 });
 function calc(){ const sub=items.reduce((s,it)=>s+(it.qty*it.price),0); const gstOn=document.getElementById('gstToggle').checked; const rate=parseFloat(document.getElementById('gstRate').value)||0; const gst=gstOn? sub*rate/100:0; return {sub,gst,total:sub+gst,rate,gstOn}; }
 function updatePreview(){
@@ -131,7 +132,6 @@ function updatePreview(){
  document.getElementById('previewGstRow').classList.toggle('hidden',!c.gstOn);
  document.getElementById('previewDate').innerText=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
  document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between"><span>${it.name||'Untitled'} x ${it.qty}</span><span>₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join('');
- // QR offline
  const upi=document.getElementById('upiId').value||'demo@upi';
  const amt=c.total;
  const upiLink=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Freelancer'}&am=${amt}&cu=INR`;
@@ -139,7 +139,11 @@ function updatePreview(){
  new QRCode(document.getElementById('qr'),{text:upiLink,width:160,height:160,colorDark:"#1A1A1A",colorLight:"#FFFFFF"});
 }
 ['fromName','upiId'].forEach(id=>document.getElementById(id).addEventListener('input',updatePreview));
-function generate(){ window.print(); }
+function generate(){
+ if(freeLeft<=0){ alert('Free limit over. Get Pro ₹999/yr - DM @j_atin___'); return; }
+ freeLeft--; localStorage.setItem('invoy_left',freeLeft); updateFree();
+ window.print();
+}
 renderItems();
 </script>
 </body>
