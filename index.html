@@ -1,77 +1,90 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>INVOY - Send. Get Paid.</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Inter',sans-serif;background:#FAF8F3;color:#1A1A1A}
+*{box-sizing:border-box} html,body{overflow-x:hidden;width:100%;margin:0;background:#FAF8F3}
+body{font-family:'Inter',sans-serif;color:#1A1A1A}
 .serif{font-family:'Instrument Serif',serif}
-.invoy-input{background:#FFF;border:1px solid #E8E3DA}.invoy-input:focus{border-color:#111;outline:none;box-shadow:0 0 0 3px rgba(0,0,0,0.06)}
-#previewLogo{width:72px;height:72px;border-radius:18px} #previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:18px}
-@media print{.no-print{display:none!important} body{background:#FFF} #invoiceCard{box-shadow:none!important;border:none!important}}
-</style></head>
-<body>
+.invoy-input{background:#FFF;border:1px solid #E8E3DA;transition:all.2s}.invoy-input:focus{border-color:#111;outline:none;box-shadow:0 0 0 3px rgba(0,0,0,.06)}
+#previewLogo{width:72px;height:72px;border-radius:18px;flex-shrink:0} #previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:18px}
+.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+@media print{.no-print{display:none!important} body{background:#FFF} #invoiceCard{box-shadow:none!important;border:none!important;border-radius:0!important}}
+@media (max-width:640px){#totalBig{font-size:40px!important}}
+</style></head><body>
 
-<!-- HEADER -->
-<header class="no-print sticky top-0 z-20 bg-[#FAF8F3]/80 backdrop-blur-md border-b border-[#E8E3DA]">
-<div class="max-w-[1200px] mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-<div class="flex items-center gap-3"><div class="w-9 h-9 bg-[#111] text-white flex items-center justify-center serif text-[20px] rounded-[10px]">I</div><div><p class="serif text-[22px] leading-none">invoy.</p><p class="text-[9px] tracking-[0.2em] uppercase opacity-50 -mt-0.5">Send. Get Paid.</p></div></div>
-<div class="flex items-center gap-2 md:gap-3">
-<div id="freeLeft" class="text-[10px] md:text-[11px] tracking-widest uppercase border border-[#111]/15 bg-white px-3 py-1.5 rounded-full">5 FREE</div>
-<button class="text-[11px] bg-[#111] text-white px-4 py-2 rounded-full">Login v4</button>
-</div></div></header>
+<header class="no-print sticky top-0 z-20 bg-[#FAF8F3]/85 backdrop-blur-xl border-b border-[#E8E3DA] w-full">
+<div class="w-full max-w-[1200px] mx-auto px-4 md:px-6 py-4 flex justify-between items-center gap-2">
+<div class="flex items-center gap-3 shrink-0"><div class="w-9 h-9 bg-[#111] text-white flex items-center justify-center serif text-[20px] rounded-[10px]">I</div><div><p class="serif text-[22px] leading-none">invoy.</p><p class="text-[9px] tracking-[0.2em] uppercase opacity-50">Send. Get Paid.</p></div></div>
+<div class="flex items-center gap-2 shrink-0"><div id="freeLeft" class="text-[10px] tracking-widest uppercase border border-black/15 bg-white px-3 py-1.5 rounded-full">5 FREE</div><button class="text-[11px] bg-[#111] text-white px-4 py-2 rounded-full">Login v4</button></div>
+</div></header>
 
-<!-- MAIN -->
-<div class="max-w-[1200px] mx-auto px-4 md:px-6 py-6 md:py-10 grid lg:grid-cols-[1.05fr_0.95fr] gap-6 md:gap-10">
+<div class="w-full max-w-[1200px] mx-auto px-4 md:px-6 py-6 md:py-10 grid lg:grid-cols-[1.05fr_0.95fr] gap-6 md:gap-10">
 
-<!-- LEFT FORM -->
-<div class="no-print">
-<div class="bg-white border border-[#E8E3DA] rounded-[20px] md:rounded-[24px] p-5 md:p-7 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
-<div class="flex justify-between items-center"><h2 class="serif text-[28px] md:text-[32px]">Create</h2><span class="text-[10px] uppercase tracking-widest opacity-40">Free • 5 invoices</span></div>
+<div class="no-print w-full min-w-0">
+<div class="bg-white border border-[#E8E3DA] rounded-[20px] md:rounded-[24px] p-5 md:p-7 shadow-[0_8px_32px_rgba(0,0,0,.04)] w-full">
+<div class="flex justify-between items-center"><h2 class="serif text-[28px] md:text-[32px]">Create</h2><span class="text-[10px] uppercase tracking-widest opacity-40">v3.7</span></div>
+
 <div class="mt-5"><label class="text-[11px] uppercase tracking-widest opacity-60">Your Logo</label><input type="file" id="logoInput" accept="image/*" class="mt-2 block w-full text-[13px] file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-[#111] file:text-white"></div>
+
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
-<div><label class="text-[11px] uppercase tracking-widest opacity-60">From (You)</label><input id="fromName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[14px]" placeholder="Jatin Studio"></div>
+<div><label class="text-[11px] uppercase tracking-widest opacity-60">From</label><input id="fromName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[14px]" placeholder="Jatin Studio"></div>
 <div><label class="text-[11px] uppercase tracking-widest opacity-60">Bill To</label><input id="toName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[14px]" placeholder="Acme Inc"></div>
 <div><label class="text-[11px] uppercase tracking-widest opacity-60">UPI ID</label><input id="upiId" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[14px]" placeholder="jatin@okicici"></div>
 <div><label class="text-[11px] uppercase tracking-widest opacity-60">Project</label><input id="projectName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[14px]" placeholder="Brand Identity"></div>
 </div>
-<div class="mt-6"><div class="flex justify-between items-center mb-3"><label class="text-[11px] uppercase tracking-widest opacity-60">Items</label><button onclick="addItem()" class="text-[11px] px-3 py-1.5 rounded-full border border-[#E8E3DA] hover:bg-black hover:text-white transition">+ Add</button></div><div id="itemsList" class="space-y-3"></div></div>
+
+<div class="mt-6"><div class="flex justify-between items-center mb-3"><label class="text-[11px] uppercase tracking-widest opacity-60">Items</label><button onclick="addItem()" class="text-[11px] px-3 py-1.5 rounded-full border border-[#E8E3DA] hover:bg-black hover:text-white">+ Add</button></div><div id="itemsList" class="space-y-3"></div></div>
+
+<!-- NOTE SECTION NEW -->
+<div class="mt-7 pt-6 border-t border-dashed border-[#E8E3DA]">
+<label class="text-[11px] uppercase tracking-widest opacity-60">Personal Note to Client ✨</label>
+<div class="flex gap-2 mt-3 overflow-x-auto pb-2 no-scrollbar">
+<button onclick="setNote('Loved working with you on this — thank you for trusting my craft! 💛')" class="shrink-0 whitespace-nowrap text-[11px] px-3.5 py-2 rounded-full bg-[#F6F5F1] border border-[#E8E3DA] hover:bg-[#111] hover:text-white transition">💛 Loved working</button>
+<button onclick="setNote('Really enjoyed this! Quick payment appreciated — helps me deliver faster next time 🙏')" class="shrink-0 whitespace-nowrap text-[11px] px-3.5 py-2 rounded-full bg-[#F6F5F1] border border-[#E8E3DA] hover:bg-[#111] hover:text-white transition">⚡ Pay fast but nice</button>
+<button onclick="setNote('Payment due within 7 days. Thanks for your support!')" class="shrink-0 whitespace-nowrap text-[11px] px-3.5 py-2 rounded-full bg-[#F6F5F1] border border-[#E8E3DA] hover:bg-[#111] hover:text-white transition">📅 7 days</button>
+<button onclick="setNote('Grateful for the opportunity! Let me know if you need anything else.')" class="shrink-0 whitespace-nowrap text-[11px] px-3.5 py-2 rounded-full bg-[#F6F5F1] border border-[#E8E3DA] hover:bg-[#111] hover:text-white transition">✨ Grateful</button>
+</div>
+<textarea id="clientNote" oninput="upd()" placeholder="eg: Thank you so much! Loved building this with you. Please clear when you get a chance :)" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-[13px] h-[80px] resize-none"></textarea>
+<p class="text-[10px] opacity-40 mt-2">Shows in yellow box on invoice. Makes you more human = gets paid faster.</p>
+</div>
+
 <button onclick="generate()" class="w-full mt-8 bg-[#111] text-white py-4 rounded-xl text-[14px] font-medium hover:bg-black transition">Generate PDF →</button>
-<p class="text-[11px] opacity-50 text-center mt-3">5 free, then ₹999/yr. History saved locally.</p>
 </div>
 
-<div class="bg-white border border-[#E8E3DA] rounded-[20px] p-5 mt-5"><h3 class="serif text-[18px]">History</h3><div id="history" class="mt-3 space-y-2"></div><p id="noHist" class="text-[12px] opacity-40 mt-2">No invoices yet.</p></div>
+<div class="bg-white border border-[#E8E3DA] rounded-[20px] p-5 mt-5 w-full"><h3 class="serif text-[18px]">History</h3><div id="history" class="mt-3 space-y-2"></div><p id="noHist" class="text-[12px] opacity-40 mt-2">No invoices yet.</p></div>
 </div>
 
-<!-- RIGHT PREVIEW -->
-<div class="lg:sticky top-[88px] h-fit">
-<div id="invoiceCard" class="bg-[#F6F5F1] border border-[#E8E6DF] rounded-[24px] md:rounded-[28px] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.12)]">
-<div class="bg-[#0F1410] text-[#F6F5F1] p-6 md:p-8">
-<div class="flex justify-between text-[10px] tracking-[0.2em] uppercase opacity-60"><span id="invNumTop">INVOICE • 001</span><span id="dateTop">01 OCT 2026</span></div>
-<div class="mt-8 md:mt-10 flex gap-5"><div id="previewLogo" class="bg-white/10 border border-white/20 flex items-center justify-center text-[10px] tracking-widest shrink-0">LOGO</div><div><p id="fromPreview" class="text-[11px] tracking-[0.2em] uppercase opacity-60">YOUR STUDIO</p><p id="projectPreview" class="serif text-[20px] md:text-[22px] leading-tight mt-1">Brand Identity</p></div></div>
-<div class="mt-8 md:mt-10"><p class="text-[10px] tracking-[0.2em] uppercase opacity-50">TOTAL DUE</p><p id="totalBig" class="serif text-[44px] md:text-[56px] leading-none mt-2">₹15,000</p><div class="w-full h-[1px] bg-white/20 mt-5"></div><p class="text-[11px] mt-4 tracking-wide"><span class="opacity-50 uppercase text-[10px]">Billed to:</span> <span id="billToBig" class="serif text-[15px] ml-2">Client</span></p></div>
+<div class="w-full min-w-0 lg:sticky top-[92px] h-fit">
+<div id="invoiceCard" class="w-full bg-[#F6F5F1] border border-[#E8E6DF] rounded-[22px] md:rounded-[28px] overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,.10)]">
+<div class="bg-[#0F1410] text-[#F6F5F1] p-6 md:p-8 w-full">
+<div class="flex justify-between text-[10px] tracking-[0.2em] uppercase opacity-60 w-full"><span id="invNumTop" class="truncate mr-2">INVOICE • 001</span><span id="dateTop" class="shrink-0">01 OCT 2026</span></div>
+<div class="mt-8 flex gap-4 md:gap-5 w-full min-w-0"><div id="previewLogo" class="bg-white/10 border border-white/20 flex items-center justify-center text-[10px] tracking-widest">LOGO</div><div class="min-w-0"><p id="fromPreview" class="text-[11px] tracking-[0.2em] uppercase opacity-60 truncate">YOUR STUDIO</p><p id="projectPreview" class="serif text-[20px] leading-tight mt-1 break-words">Brand Identity</p></div></div>
+<div class="mt-8"><p class="text-[10px] tracking-[0.2em] uppercase opacity-50">TOTAL DUE</p><p id="totalBig" class="serif leading-none mt-2 break-all">₹15,000</p><div class="w-full h-[1px] bg-white/20 mt-5"></div><p class="text-[11px] mt-4"><span class="opacity-50 uppercase text-[10px]">Billed to:</span> <span id="billToBig" class="serif text-[15px] ml-2 break-all">Client</span></p></div>
 </div>
-<div class="p-6 md:p-8 bg-[#F6F5F1]">
-<div id="previewItems" class="space-y-3 text-[13px]"></div>
+<div class="p-5 md:p-8 bg-[#F6F5F1] w-full">
+<div id="previewItems" class="space-y-3 text-[13px] w-full"></div>
 <div class="border-t border-[#D8D5CC] mt-6 pt-4 flex justify-between text-[13px]"><span class="opacity-60">Subtotal</span><span id="subSmall">₹15,000</span></div>
-<div class="mt-6 md:mt-8 flex justify-between items-end border-t border-black pt-5 gap-4">
-<div><p class="text-[10px] uppercase tracking-widest opacity-60 mb-2">Scan to pay • UPI</p><div id="qr" class="p-2 bg-white rounded-xl border border-[#E8E6DF] w-fit"></div><p id="upiSmall" class="text-[10px] opacity-50 mt-2 font-mono break-all"></p></div>
-<div class="text-right shrink-0"><p class="text-[10px] uppercase opacity-50 tracking-widest">Amount</p><p id="totalSmall" class="serif text-[26px] md:text-[28px]">₹15,000</p></div>
+
+<div id="notePreviewWrap" class="hidden mt-6 p-4 rounded-[14px] bg-[#FFF8DB] border border-[#F2E7A0]"><p class="text-[9px] uppercase tracking-[0.2em] opacity-60 mb-1">Note from creator</p><p id="notePreview" class="text-[12.5px] leading-[1.5]"></p></div>
+
+<div class="mt-7 flex justify-between items-end border-t border-black pt-5 gap-3 w-full">
+<div class="min-w-0"><p class="text-[10px] uppercase tracking-widest opacity-60 mb-2">Scan to pay • UPI</p><div id="qr" class="p-2 bg-white rounded-xl border border-[#E8E6DF] w-fit"></div><p id="upiSmall" class="text-[10px] opacity-50 mt-2 font-mono break-all max-w-[160px]"></p></div>
+<div class="text-right shrink-0"><p class="text-[10px] uppercase opacity-50 tracking-widest">Amount</p><p id="totalSmall" class="serif text-[24px] md:text-[28px]">₹15,000</p></div>
 </div>
-<div class="mt-8 flex flex-col md:flex-row justify-between gap-1 text-[9px] opacity-40 uppercase tracking-widest"><span>ID: <span id="verifyId">INV-2026-XXXX</span> • invoy.co</span><span>Generated via INVOY</span></div>
+<div class="mt-8 flex flex-col md:flex-row justify-between gap-1 text-[8.5px] opacity-40 uppercase tracking-widest break-all"><span>ID: <span id="verifyId">INV-2026-XXXX</span> • invoy.co</span><span>Generated via INVOY</span></div>
 </div></div>
-<p class="no-print text-[11px] opacity-40 text-center mt-4 px-4">This preview = exact PDF. QR works on print.</p>
+<p class="no-print text-[11px] opacity-40 text-center mt-4 px-4">Preview = exact PDF. No cut on phone now.</p>
 </div>
 </div>
 
-<!-- FOOTER -->
-<footer class="no-print border-t border-[#E8E3DA] mt-10 bg-white">
-<div class="max-w-[1200px] mx-auto px-4 md:px-6 py-8 flex flex-col md:flex-row justify-between gap-4">
-<div class="flex items-center gap-3"><div class="w-8 h-8 bg-[#111] text-white flex items-center justify-center serif text-[18px] rounded-[8px]">I</div><div><p class="serif text-[18px] leading-none">invoy.</p><p class="text-[10px] opacity-50 mt-1">© 2026 INVOY. For Indian freelancers.</p></div></div>
-<div class="flex gap-6 text-[11px] uppercase tracking-widest opacity-60"><a>Privacy</a><a>Terms</a><a class="text-[#111]">X / Twitter</a></div>
-</div>
-</footer>
+<footer class="no-print border-t border-[#E8E3DA] mt-10 bg-white w-full">
+<div class="w-full max-w-[1200px] mx-auto px-4 md:px-6 py-8 flex flex-col md:flex-row justify-between gap-4">
+<div class="flex items-center gap-3"><div class="w-8 h-8 bg-[#111] text-white flex items-center justify-center serif text-[18px] rounded-[8px]">I</div><div><p class="serif text-[18px] leading-none">invoy.</p><p class="text-[10px] opacity-50 mt-1">© 2026 INVOY. Built for Indian freelancers.</p></div></div>
+<div class="flex gap-6 text-[11px] uppercase tracking-widest opacity-60"><a>Privacy</a><a>Terms</a><a class="text-black">X / Twitter</a></div>
+</div></footer>
 
 <script>
 let items=[{name:'Brand Identity',qty:1,price:15000}];
@@ -81,10 +94,11 @@ function renderHist(){const h=document.getElementById('history'); if(!hist.lengt
 updFree(); renderHist();
 function renderItems(){const el=document.getElementById('itemsList'); el.innerHTML=''; items.forEach((it,i)=>{el.innerHTML+=`<div class="grid grid-cols-[1fr_56px_88px_28px] gap-2"><input value="${it.name}" oninput="items[${i}].name=this.value;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-[13px]"><input type="number" value="${it.qty}" oninput="items[${i}].qty=+this.value||0;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-[13px]"><input type="number" value="${it.price}" oninput="items[${i}].price=+this.value||0;upd()" class="invoy-input px-3 py-2.5 rounded-xl text-[13px]"><button onclick="items.length>1&&items.splice(${i},1)&&renderItems()" class="opacity-40">✕</button></div>`}); upd();}
 function addItem(){items.push({name:'',qty:1,price:0}); renderItems();}
+function setNote(t){document.getElementById('clientNote').value=t; upd();}
 document.getElementById('logoInput').addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`;}; r.readAsDataURL(f);});
 function calc(){return items.reduce((s,it)=>s+it.qty*it.price,0);}
-function upd(){const total=calc(); document.getElementById('totalBig').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('totalSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('subSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('billToBig').innerText=document.getElementById('toName').value||'Client'; document.getElementById('fromPreview').innerText=(document.getElementById('fromName').value||'YOUR STUDIO').toUpperCase(); document.getElementById('projectPreview').innerText=document.getElementById('projectName').value||items[0]?.name||'Project'; document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between py-1"><span>${it.name||'Item'} <span class="opacity-40">× ${it.qty}</span></span><span>₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join(''); const upi=document.getElementById('upiId').value||'demo@upi'; document.getElementById('upiSmall').innerText=upi; const link=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Studio'}&am=${total}&cu=INR`; document.getElementById('qr').innerHTML=''; new QRCode(document.getElementById('qr'),{text:link,width:112,height:112,colorDark:"#0F1410",colorLight:"#FFFFFF"}); const now=new Date(); document.getElementById('dateTop').innerText=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();}
+function upd(){const total=calc(); document.getElementById('totalBig').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('totalSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('subSmall').innerText='₹'+total.toLocaleString('en-IN'); document.getElementById('billToBig').innerText=document.getElementById('toName').value||'Client'; document.getElementById('fromPreview').innerText=(document.getElementById('fromName').value||'YOUR STUDIO'); document.getElementById('projectPreview').innerText=document.getElementById('projectName').value||items[0]?.name||'Project'; document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between py-1 gap-2"><span class="min-w-0 break-words">${it.name||'Item'} <span class="opacity-40">× ${it.qty}</span></span><span class="shrink-0">₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join(''); const upi=document.getElementById('upiId').value||'demo@upi'; document.getElementById('upiSmall').innerText=upi; const link=`upi://pay?pa=${upi}&pn=${encodeURIComponent(document.getElementById('fromName').value||'Studio')}&am=${total}&cu=INR`; document.getElementById('qr').innerHTML=''; new QRCode(document.getElementById('qr'),{text:link,width:112,height:112,colorDark:"#0F1410",colorLight:"#FFFFFF",correctLevel:QRCode.CorrectLevel.H}); const now=new Date(); document.getElementById('dateTop').innerText=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase(); const note=document.getElementById('clientNote').value.trim(); const wrap=document.getElementById('notePreviewWrap'); if(note){wrap.classList.remove('hidden'); document.getElementById('notePreview').innerText=note;} else wrap.classList.add('hidden');}
 ['fromName','toName','upiId','projectName'].forEach(id=>document.getElementById(id).addEventListener('input',upd));
-function generate(){if(freeLeft<=0){alert('Pro needed'); return;} const total=calc(); const inv='INV-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*9000+1000); document.getElementById('invNumTop').innerText='INVOICE • '+inv; document.getElementById('verifyId').innerText=inv; const client=document.getElementById('toName').value||'Client'; hist.push({client,total,date:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}),inv}); if(hist.length>5) hist=hist.slice(-5); localStorage.setItem('invoy_hist',JSON.stringify(hist)); freeLeft--; localStorage.setItem('invoy_left_v5',freeLeft); updFree(); renderHist(); window.print();}
+function generate(){if(freeLeft<=0){alert('Pro needed - ₹999/yr'); return;} const total=calc(); const inv='INV-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*9000+1000); document.getElementById('invNumTop').innerText='INVOICE • '+inv; document.getElementById('verifyId').innerText=inv; const client=document.getElementById('toName').value||'Client'; hist.push({client,total,date:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}),inv}); if(hist.length>5) hist=hist.slice(-5); localStorage.setItem('invoy_hist',JSON.stringify(hist)); freeLeft--; localStorage.setItem('invoy_left_v5',freeLeft); updFree(); renderHist(); window.print();}
 renderItems();
 </script></body></html>
