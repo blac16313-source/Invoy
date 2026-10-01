@@ -1,83 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INVOY - Send. Get Paid.</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body{font-family:'Inter',sans-serif;background:#FDFBF6;color:#1A1A1A}
+body{font-family:'Inter',sans-serif;background:#FDFBF6;color:#1A1A1A}
 .serif{font-family:'Instrument Serif',serif}
 .invoy-card{background:#FFFFFF;border:1px solid #EAE6DE;box-shadow:0 4px 24px rgba(26,26,26,0.04)}
 .invoy-input{background:#F9F7F2;border:1px solid #EAE6DE;transition:all 0.2s}
 .invoy-input:focus{background:#FFFFFF;border-color:#1A1A1A;outline:none;box-shadow:0 0 0 3px #F0EDE5}
- #previewLogo{width:56px;height:56px;border-radius:14px}
- #previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:14px}
+#previewLogo{width:56px;height:56px;border-radius:14px}
+#previewLogo img{width:100%;height:100%;object-fit:contain;border-radius:14px}
 </style>
 </head>
-<body class="min-h-screen">
+<body>
 
 <header class="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center">
-  <div class="flex items-center gap-3">
-    <div class="w-9 h-9 bg-[#1A1A1A] text-[#FDFBF6] flex items-center justify-center serif text-xl rounded-[10px]">I</div>
-    <span class="serif text-[24px] tracking-[-0.02em]">invoy.</span>
-  </div>
-  <div class="text-[11px] tracking-[0.14em] uppercase opacity-60" id="freeLeft">3 FREE LEFT • GST READY • OFFLINE QR</div>
+  <div class="flex items-center gap-3"><div class="w-9 h-9 bg-[#1A1A1A] text-[#FDFBF6] flex items-center justify-center serif text-xl rounded-[10px]">I</div><span class="serif text-[24px]">invoy.</span></div>
+  <div class="text-[11px] tracking-[0.14em] uppercase opacity-60" id="freeLeft">5 FREE LEFT</div>
 </header>
 
 <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 pb-20">
 
+<div>
 <div class="invoy-card rounded-[20px] p-7 lg:p-8">
-  <h2 class="serif text-[32px] leading-none mb-6">Create invoice</h2>
-
-  <div class="mb-6">
-    <label class="text-[11px] uppercase tracking-widest opacity-60">Your Logo (optional)</label>
-    <input type="file" id="logoInput" accept="image/*" class="mt-2 block text-sm">
-  </div>
-
+  <h2 class="serif text-[32px] mb-6">Create invoice</h2>
+  <div class="mb-6"><label class="text-[11px] uppercase tracking-widest opacity-60">Your Logo</label><input type="file" id="logoInput" accept="image/*" class="mt-2 block text-sm"></div>
   <div class="grid grid-cols-2 gap-4 mb-4">
-    <div><label class="text-[11px] uppercase tracking-widest opacity-60">From</label><input id="fromName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Jatin, Designer"></div>
-    <div><label class="text-[11px] uppercase tracking-widest opacity-60">Bill To</label><input id="toName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Acme Inc."></div>
+    <div><label class="text-[11px] uppercase tracking-widest opacity-60">From</label><input id="fromName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Jatin Studio"></div>
+    <div><label class="text-[11px] uppercase tracking-widest opacity-60">Bill To</label><input id="toName" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="Acme Inc"></div>
   </div>
-
-  <div class="mb-5">
-    <label class="text-[11px] uppercase tracking-widest opacity-60">Your UPI ID</label>
-    <input id="upiId" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm font-medium" placeholder="jatin@okicici">
-  </div>
-
-  <div class="flex justify-between items-center mt-8 mb-3">
-    <label class="text-[11px] uppercase tracking-widest opacity-60">Items</label>
-    <button onclick="addItem()" class="text-xs px-3 py-1.5 rounded-full border border-[#EAE6DE] hover:bg-[#1A1A1A] hover:text-white transition">+ Add</button>
-  </div>
+  <div class="mb-5"><label class="text-[11px] uppercase tracking-widest opacity-60">UPI ID</label><input id="upiId" class="invoy-input w-full mt-2 px-4 py-3 rounded-xl text-sm" placeholder="jatin@okicici"></div>
+  <div class="flex justify-between items-center mt-8 mb-3"><label class="text-[11px] uppercase tracking-widest opacity-60">Items</label><button onclick="addItem()" class="text-xs px-3 py-1.5 rounded-full border border-[#EAE6DE] hover:bg-black hover:text-white transition">+ Add</button></div>
   <div id="itemsList" class="space-y-3"></div>
-
   <div class="mt-8 p-4 rounded-xl bg-[#F9F7F2] border border-[#EAE6DE] flex justify-between items-center">
-    <div>
-      <p class="text-sm font-medium">Add GST? <span class="text-[11px] opacity-60 font-normal">(OFF by default)</span></p>
-      <p class="text-[11px] opacity-60 mt-1 max-w-[28ch]">Turn ON only if GST registered. You must pay GST to govt before 20th next month.</p>
-    </div>
-    <label class="relative inline-flex items-center cursor-pointer">
-      <input type="checkbox" id="gstToggle" class="sr-only peer">
-      <div class="w-11 h-6 bg-[#EAE6DE] rounded-full peer peer-checked:bg-[#1A1A1A] transition"></div>
-      <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full peer-checked:translate-x-5 transition"></div>
-    </label>
+    <div><p class="text-sm font-medium">Add GST? <span class="text-[11px] opacity-60">(OFF)</span></p></div>
+    <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" id="gstToggle" class="sr-only peer"><div class="w-11 h-6 bg-[#EAE6DE] rounded-full peer peer-checked:bg-[#1A1A1A] transition"></div><div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full peer-checked:translate-x-5 transition"></div></label>
   </div>
-  <div id="gstRateWrap" class="hidden mt-3">
-    <select id="gstRate" class="invoy-input w-full px-4 py-3 rounded-xl text-sm"><option value="18">18% (Services)</option><option value="12">12%</option><option value="5">5%</option></select>
-  </div>
+  <div id="gstRateWrap" class="hidden mt-3"><select id="gstRate" class="invoy-input w-full px-4 py-3 rounded-xl text-sm"><option value="18">18% Services</option><option value="12">12%</option><option value="5">5%</option></select></div>
+  <button onclick="generate()" class="w-full mt-8 bg-[#1A1A1A] text-white py-4 rounded-xl text-sm font-medium">Generate PDF →</button>
+  <button onclick="buyPro()" class="w-full mt-3 bg-white border border-black py-4 rounded-xl text-sm font-medium">Get Pro ₹999/yr — Unlimited</button>
+</div>
 
-  <button onclick="generate()" class="w-full mt-8 bg-[#1A1A1A] text-[#FDFBF6] py-4 rounded-xl text-sm tracking-wide font-medium hover:opacity-90 transition">Generate PDF →</button>
-  <button onclick="alert('Pro ₹999/yr - DM @j_atin___ on X with payment screenshot. I will send Pro version (no watermark + unlimited)')" class="w-full mt-3 bg-white text-[#1A1A1A] border border-[#1A1A1A] py-4 rounded-xl text-sm tracking-wide font-medium">Get Pro — ₹999/yr</button>
+<!-- HISTORY -->
+<div class="invoy-card rounded-[20px] p-6 mt-6">
+  <h3 class="serif text-xl mb-4">Last invoices</h3>
+  <div id="history" class="space-y-2 text-sm"></div>
+  <p id="noHist" class="text-xs opacity-40">No invoices yet. Your last 5 will show here with name & date.</p>
+</div>
 </div>
 
 <div class="invoy-card rounded-[20px] p-8 lg:sticky top-8 h-fit">
-  <div id="invoicePreview" class="min-h-[480px]">
-    <div class="flex justify-between items-start mb-8">
-      <div id="previewLogo" class="bg-[#F9F7F2] border border-[#EAE6DE] flex items-center justify-center text-[10px] opacity-40">LOGO</div>
-      <div class="text-right"><p class="serif text-[28px] leading-none">Invoice</p><p id="previewDate" class="text-xs opacity-60 mt-1"></p></div>
-    </div>
+  <div id="invoicePreview">
+    <div class="flex justify-between items-start mb-8"><div id="previewLogo" class="bg-[#F9F7F2] border border-[#EAE6DE] flex items-center justify-center text-[10px] opacity-40">LOGO</div><div class="text-right"><p class="serif text-[28px]">Invoice</p><p id="previewDate" class="text-xs opacity-60 mt-1"></p><p id="previewInvNum" class="text-[11px] opacity-40 mono mt-1"></p></div></div>
     <div id="previewItems" class="space-y-3 text-sm"></div>
     <div class="border-t border-dashed border-[#EAE6DE] mt-6 pt-4 space-y-2 text-sm">
       <div class="flex justify-between opacity-60"><span>Subtotal</span><span id="previewSub">₹0</span></div>
@@ -85,44 +63,37 @@
       <div class="flex justify-between font-semibold text-[16px]"><span>Total</span><span id="previewTotal">₹0</span></div>
     </div>
     <div class="mt-8 flex justify-center"><div id="qr"></div></div>
-    <p id="wm" class="text-[10px] opacity-40 mt-8 text-center tracking-wide">MADE WITH INVOY • FREE VERSION — Get Pro to remove • invoy.co</p>
-    <p class="text-[10px] opacity-30 mt-2 text-center leading-relaxed">Tax compliance is issuer's responsibility. INVOY does not process payments.</p>
+    <p id="wm" class="text-[10px] opacity-40 mt-8 text-center">MADE WITH INVOY • FREE VERSION</p>
   </div>
 </div>
 
 </div>
 
 <script>
-let items = [{name:'Design work', qty:1, price:10000}];
-const itemsList = document.getElementById('itemsList');
-let freeLeft = parseInt(localStorage.getItem('invoy_left')||'3');
-function updateFree(){ document.getElementById('freeLeft').innerText = freeLeft>0? freeLeft+' FREE LEFT • GST READY • OFFLINE QR' : 'LIMIT REACHED — GET PRO'; }
-updateFree();
-
+let items=[{name:'Design work',qty:1,price:10000}];
+let freeLeft=parseInt(localStorage.getItem('invoy_left_v5')||'5');
+let history=JSON.parse(localStorage.getItem('invoy_hist')||'[]');
+const itemsList=document.getElementById('itemsList');
+function updateFree(){document.getElementById('freeLeft').innerText= freeLeft>0? freeLeft+' FREE LEFT / 5' : 'LIMIT REACHED — BUY PRO';}
+function renderHistory(){
+ const h=document.getElementById('history'); const n=document.getElementById('noHist');
+ if(history.length===0){h.innerHTML=''; n.style.display='block'; return;}
+ n.style.display='none';
+ h.innerHTML=history.slice().reverse().map(x=>`<div class="flex justify-between items-center p-3 rounded-xl bg-[#F9F7F2] border border-[#EAE6DE]"><div><div class="font-medium">${x.client}</div><div class="text-[11px] opacity-60">${x.date} • ${x.invNum}</div></div><div class="font-medium">₹${x.total.toLocaleString('en-IN')}</div></div>`).join('');
+}
+updateFree(); renderHistory();
 function renderItems(){
  itemsList.innerHTML='';
  items.forEach((it,i)=>{
-  itemsList.innerHTML+=`<div class="grid grid-cols-[1fr_60px_90px_28px] gap-2">
-   <input value="${it.name}" oninput="items[${i}].name=this.value; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm" placeholder="Item">
-   <input type="number" value="${it.qty}" oninput="items[${i}].qty=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm">
-   <input type="number" value="${it.price}" oninput="items[${i}].price=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm">
-   <button onclick="removeItem(${i})" class="text-xs opacity-40 hover:opacity-100">✕</button>
-  </div>`;
- });
- updatePreview();
+  itemsList.innerHTML+=`<div class="grid grid-cols-[1fr_60px_90px_28px] gap-2"><input value="${it.name}" oninput="items[${i}].name=this.value; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.qty}" oninput="items[${i}].qty=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><input type="number" value="${it.price}" oninput="items[${i}].price=parseFloat(this.value)||0; updatePreview()" class="invoy-input px-3 py-2.5 rounded-xl text-sm"><button onclick="removeItem(${i})" class="text-xs opacity-40">✕</button></div>`;
+ }); updatePreview();
 }
 function addItem(){items.push({name:'',qty:1,price:0}); renderItems();}
 function removeItem(i){if(items.length>1){items.splice(i,1); renderItems();}}
-document.getElementById('gstToggle').addEventListener('change',e=>{
- document.getElementById('gstRateWrap').classList.toggle('hidden',!e.target.checked);
- updatePreview();
-});
+document.getElementById('gstToggle').addEventListener('change',e=>{document.getElementById('gstRateWrap').classList.toggle('hidden',!e.target.checked); updatePreview();});
 document.getElementById('gstRate').addEventListener('change',updatePreview);
-document.getElementById('logoInput').addEventListener('change',e=>{
- const file=e.target.files[0]; if(!file) return;
- const reader=new FileReader(); reader.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`; document.getElementById('previewLogo').style.opacity='1';}; reader.readAsDataURL(file);
-});
-function calc(){ const sub=items.reduce((s,it)=>s+(it.qty*it.price),0); const gstOn=document.getElementById('gstToggle').checked; const rate=parseFloat(document.getElementById('gstRate').value)||0; const gst=gstOn? sub*rate/100:0; return {sub,gst,total:sub+gst,rate,gstOn}; }
+document.getElementById('logoInput').addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{document.getElementById('previewLogo').innerHTML=`<img src="${ev.target.result}">`; document.getElementById('previewLogo').style.opacity='1';}; r.readAsDataURL(f);});
+function calc(){const sub=items.reduce((s,it)=>s+it.qty*it.price,0); const gstOn=document.getElementById('gstToggle').checked; const rate=parseFloat(document.getElementById('gstRate').value)||0; const gst=gstOn? sub*rate/100:0; return {sub,gst,total:sub+gst,rate,gstOn};}
 function updatePreview(){
  const c=calc();
  document.getElementById('previewSub').innerText='₹'+c.sub.toLocaleString('en-IN');
@@ -130,20 +101,29 @@ function updatePreview(){
  document.getElementById('previewTotal').innerText='₹'+c.total.toLocaleString('en-IN');
  document.getElementById('previewGstPer').innerText=c.rate;
  document.getElementById('previewGstRow').classList.toggle('hidden',!c.gstOn);
- document.getElementById('previewDate').innerText=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+ const now=new Date();
+ document.getElementById('previewDate').innerText=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
  document.getElementById('previewItems').innerHTML=items.map(it=>`<div class="flex justify-between"><span>${it.name||'Untitled'} x ${it.qty}</span><span>₹${(it.qty*it.price).toLocaleString('en-IN')}</span></div>`).join('');
  const upi=document.getElementById('upiId').value||'demo@upi';
- const amt=c.total;
- const upiLink=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Freelancer'}&am=${amt}&cu=INR`;
- document.getElementById('qr').innerHTML='';
- new QRCode(document.getElementById('qr'),{text:upiLink,width:160,height:160,colorDark:"#1A1A1A",colorLight:"#FFFFFF"});
+ const upiLink=`upi://pay?pa=${upi}&pn=${document.getElementById('fromName').value||'Freelancer'}&am=${c.total}&cu=INR`;
+ document.getElementById('qr').innerHTML=''; new QRCode(document.getElementById('qr'),{text:upiLink,width:160,height:160,colorDark:"#1A1A1A",colorLight:"#FFFFFF"});
 }
 ['fromName','upiId'].forEach(id=>document.getElementById(id).addEventListener('input',updatePreview));
 function generate(){
- if(freeLeft<=0){ alert('Free limit over. Get Pro ₹999/yr - DM @j_atin___'); return; }
- freeLeft--; localStorage.setItem('invoy_left',freeLeft); updateFree();
+ if(freeLeft<=0){ buyPro(); return; }
+ const c=calc();
+ const invNum='INV-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*9000+1000);
+ document.getElementById('previewInvNum').innerText=invNum;
+ const client=document.getElementById('toName').value||'Client';
+ const dateStr=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+ history.push({client,total:c.total,date:dateStr,invNum});
+ if(history.length>5) history=history.slice(-5);
+ localStorage.setItem('invoy_hist',JSON.stringify(history));
+ freeLeft--; localStorage.setItem('invoy_left_v5',freeLeft);
+ updateFree(); renderHistory();
  window.print();
 }
+function buyPro(){ alert('Pro ₹999/yr for unlimited + no watermark. DM @j_atin___ on X with screenshot. I will send Pro key.'); }
 renderItems();
 </script>
 </body>
